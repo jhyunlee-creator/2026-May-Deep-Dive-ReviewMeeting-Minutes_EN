@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DDR — Non-Action Fantasy & Hybrid Thriller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --paper: #f5f0e8;
+    --paper-dark: #ede8dc;
+    --accent: #c4421a;
+    --accent-soft: #e8b89e;
+    --muted: #7a6e62;
+    --rule: #cdc5b5;
+    --highlight: #f0e6d0;
+    --green: #2d6a4f;
+    --blue: #1e4d7a;
+    --blue-bg: #e8f0f8;
+    --red-bg: #fde8e4;
+    --green-bg: #e8f4ec;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 56px 0 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: 'DDR';
+    position: absolute;
+    right: -20px; top: -20px;
+    font-family: 'Fraunces', serif;
+    font-size: 220px; font-weight: 700;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none; user-select: none;
+  }
+  .header-inner { max-width: 900px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 1; }
+  .header-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 16px; }
+  .header-title { font-family: 'Fraunces', serif; font-size: clamp(26px, 4vw, 38px); font-weight: 300; line-height: 1.25; margin-bottom: 10px; }
+  .header-title em { font-style: italic; color: var(--accent-soft); }
+  .header-sub { font-size: 13px; color: rgba(245,240,232,0.55); font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+  .header-meta { display: flex; gap: 32px; margin-top: 32px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+  .meta-value { font-size: 13px; color: rgba(245,240,232,0.85); }
+
+  /* LAYOUT */
+  .page { max-width: 900px; margin: 0 auto; padding: 0 48px 80px; }
+
+  /* SECTION */
+  .section { margin-top: 60px; }
+  .section-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1.5px solid var(--rule); }
+  .section-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; flex-shrink: 0; }
+  .section-title { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 300; }
+
+  /* PURPOSE */
+  .purpose-box { border-left: 3px solid var(--accent); background: var(--highlight); padding: 24px 28px; margin: 40px 0 0; }
+  .purpose-box .box-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .purpose-box p { font-size: 14.5px; line-height: 1.9; }
+
+  /* SELECTED TITLES */
+  .titles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
+  @media (max-width: 640px) { .titles-grid { grid-template-columns: 1fr 1fr; } }
+  .title-badge { background: var(--ink); color: var(--paper); padding: 12px 14px; }
+  .title-badge .tb-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 6px; }
+  .title-badge .tb-name { font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; line-height: 1.4; }
+
+  /* INSIGHT BLOCK */
+  .insight-block { margin-top: 28px; display: flex; flex-direction: column; gap: 20px; }
+  .insight-item { border: 1px solid var(--rule); }
+  .insight-item-head { background: var(--paper-dark); padding: 14px 20px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--rule); }
+  .insight-item-head .item-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.1em; }
+  .insight-item-head .item-title { font-size: 14.5px; font-weight: 600; }
+  .insight-item-body { padding: 18px 20px; font-size: 13.5px; line-height: 1.85; color: #333; }
+  .insight-item-body p + p { margin-top: 10px; }
+  .insight-item-body .case-note { margin-top: 12px; background: var(--highlight); padding: 10px 14px; font-size: 12.5px; color: var(--muted); border-left: 2px solid var(--accent-soft); line-height: 1.75; }
+  .insight-item-body .case-note strong { color: var(--ink); }
+
+  /* QUOTE PULL */
+  .pull-quote { margin: 16px 0; padding: 16px 22px; border-left: 3px solid var(--accent); background: var(--paper-dark); font-family: 'Fraunces', serif; font-style: italic; font-size: 15px; line-height: 1.75; color: var(--ink); }
+  .pull-quote .quote-attr { display: block; margin-top: 8px; font-family: 'DM Mono', monospace; font-style: normal; font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+
+  /* DUO RELATIONSHIP */
+  .duo-section { margin-top: 32px; border: 1.5px solid var(--rule); overflow: hidden; }
+  .duo-head { background: var(--ink); color: var(--paper); padding: 18px 24px; }
+  .duo-head-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 6px; }
+  .duo-head-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 300; font-style: italic; }
+  .duo-body { padding: 24px; }
+  .duo-body p { font-size: 13.5px; line-height: 1.9; margin-bottom: 18px; }
+  .duo-examples { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 4px; }
+  @media (max-width: 640px) { .duo-examples { grid-template-columns: 1fr; } }
+  .duo-example { background: var(--paper-dark); border: 1px solid var(--rule); padding: 14px 16px; }
+  .duo-example .ex-title { font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .duo-example .ex-pair { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.06em; margin-bottom: 8px; }
+  .duo-example .ex-desc { font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+  .duo-mechanics { margin-top: 20px; background: var(--highlight); padding: 16px 20px; }
+  .duo-mechanics .mech-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .duo-mechanics ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .duo-mechanics ul li { font-size: 13px; padding-left: 16px; position: relative; line-height: 1.7; }
+  .duo-mechanics ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-family: 'DM Mono', monospace; font-size: 11px; top: 3px; }
+
+  /* FAIL FACTOR */
+  .fail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+  @media (max-width: 620px) { .fail-grid { grid-template-columns: 1fr; } }
+  .fail-col-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .fail-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .fail-list li { font-size: 13px; padding-left: 20px; position: relative; line-height: 1.7; }
+  .fail-list.negative li::before { content: '✕'; position: absolute; left: 0; color: var(--accent); font-size: 11px; top: 3px; }
+  .fail-list.positive li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-size: 12px; top: 2px; }
+  .fail-col { background: var(--paper-dark); border: 1px solid var(--rule); padding: 18px 20px; }
+  .fail-col.negative { border-top: 3px solid var(--accent); }
+  .fail-col.positive { border-top: 3px solid var(--green); }
+  .fail-case { margin-top: 20px; background: var(--red-bg); border: 1px solid #f0c0b0; border-left: 4px solid var(--accent); padding: 16px 20px; font-size: 13px; line-height: 1.8; }
+  .fail-case .case-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .success-case { margin-top: 16px; background: var(--green-bg); border: 1px solid #c0ddc8; border-left: 4px solid var(--green); padding: 16px 20px; font-size: 13px; line-height: 1.8; }
+  .success-case .case-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+
+  /* THEME BUCKET */
+  .bucket-block { margin-top: 32px; border: 1.5px solid var(--rule); overflow: hidden; }
+  .bucket-head { background: var(--ink); color: var(--paper); padding: 20px 28px; display: flex; align-items: baseline; gap: 16px; }
+  .bucket-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-soft); letter-spacing: 0.1em; flex-shrink: 0; }
+  .bucket-name { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 300; font-style: italic; }
+  .bucket-definition { padding: 20px 28px; background: var(--highlight); border-bottom: 1px solid var(--rule); font-size: 13.5px; line-height: 1.9; }
+  .bucket-definition strong { font-weight: 600; }
+  .bucket-grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--rule); }
+  @media (max-width: 580px) { .bucket-grid { grid-template-columns: 1fr; } }
+  .bucket-grid-col { padding: 20px 24px; }
+  .bucket-grid-col:first-child { border-right: 1px solid var(--rule); }
+  .bucket-col-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .bucket-grid-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .bucket-grid-col ul li { font-size: 13px; padding-left: 16px; position: relative; line-height: 1.7; }
+  .bucket-grid-col ul li::before { content: '·'; position: absolute; left: 3px; color: var(--accent); font-size: 16px; line-height: 1.35; }
+  .bucket-grid-col ul li .li-note { display: block; font-size: 11.5px; color: var(--muted); margin-top: 2px; font-family: 'DM Mono', monospace; letter-spacing: 0.02em; }
+  .bucket-cases { padding: 20px 28px; border-bottom: 1px solid var(--rule); }
+  .bucket-cases-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .case-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .case-card { background: var(--paper-dark); border: 1px solid var(--rule); padding: 14px 16px; }
+  .case-card .cc-title { font-family: 'Fraunces', serif; font-style: italic; font-size: 13.5px; font-weight: 600; margin-bottom: 6px; }
+  .case-card .cc-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 8px; }
+  .case-card .cc-why { font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+  .bucket-sourcing { padding: 16px 28px; background: var(--green-bg); }
+  .bucket-sourcing .src-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+  .bucket-sourcing ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .bucket-sourcing ul li { background: white; border: 1px solid #c0ddc8; font-size: 12.5px; padding: 4px 12px; color: var(--green); }
+
+  /* THRILLER-SPECIFIC STYLES */
+  .thriller-insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 28px; }
+  @media (max-width: 600px) { .thriller-insight-grid { grid-template-columns: 1fr; } }
+  .thriller-insight-item { border: 1px solid var(--rule); background: var(--paper-dark); padding: 16px 18px; }
+  .thriller-insight-item .ti-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .thriller-insight-item .ti-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+  .thriller-insight-item .ti-body { font-size: 12.5px; color: var(--muted); line-height: 1.75; }
+  .thriller-insight-item .ti-body p + p { margin-top: 8px; }
+
+  .suspense-vs-thriller { margin: 0 28px 20px; border: 1.5px solid var(--rule); overflow: hidden; }
+  .svt-head { background: var(--ink); color: var(--paper); padding: 14px 20px; }
+  .svt-head-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 4px; }
+  .svt-head-title { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 300; font-style: italic; }
+  .svt-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 580px) { .svt-grid { grid-template-columns: 1fr; } }
+  .svt-col { padding: 18px 20px; }
+  .svt-col:first-child { border-right: 1px solid var(--rule); }
+  .svt-col-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .svt-col-def { font-size: 13px; font-style: italic; margin-bottom: 10px; line-height: 1.7; border-left: 2px solid var(--accent); padding-left: 10px; }
+  .svt-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .svt-col ul li { font-size: 12.5px; color: var(--muted); padding-left: 14px; position: relative; line-height: 1.6; }
+  .svt-col ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-family: 'DM Mono', monospace; font-size: 10px; top: 3px; }
+
+  .genre-strategy { margin: 0 28px 20px; border: 1px solid var(--rule); padding: 18px 20px; background: var(--blue-bg); }
+  .genre-strategy .gs-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .genre-strategy p { font-size: 13px; line-height: 1.8; margin-bottom: 10px; }
+  .genre-strategy p:last-child { margin-bottom: 0; }
+
+  /* MARKET NOTES */
+  .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin: 0 28px 20px; }
+  .market-item { border: 1px solid var(--rule); background: var(--paper-dark); padding: 14px 16px; }
+  .market-item .mkt-country { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 6px; }
+  .market-item .mkt-note { font-size: 12.5px; line-height: 1.7; color: var(--muted); }
+  .market-section-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 28px 12px; }
+
+  /* ACTION ITEMS */
+  .action-list { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .action-item { display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; align-items: start; padding: 14px 18px; background: var(--paper-dark); border: 1px solid var(--rule); }
+  .action-idx { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); padding-top: 3px; }
+  .action-text { font-size: 13.5px; line-height: 1.75; }
+  .action-owner { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--muted); text-align: right; white-space: nowrap; padding-top: 3px; }
+
+  /* TITLE REVIEWS */
+  .title-review-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+  .title-review { border: 1px solid var(--rule); overflow: hidden; }
+  .title-review-head { background: var(--paper-dark); padding: 14px 20px; border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .title-review-head .tr-name { font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; font-weight: 600; }
+  .title-review-head .tr-bucket { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--accent); }
+  .title-review-body { padding: 16px 20px; font-size: 13.5px; line-height: 1.85; }
+  .title-review-body p + p { margin-top: 10px; }
+  .title-review-body .tr-verdict { margin-top: 12px; padding: 10px 14px; background: var(--highlight); border-left: 2px solid var(--accent); font-size: 12.5px; line-height: 1.75; }
+  .title-review-body .tr-verdict strong { color: var(--accent); }
+
+  /* CONCLUSION */
+  .conclusion-box { background: var(--ink); color: var(--paper); padding: 40px 48px; margin-top: 60px; position: relative; overflow: hidden; }
+  .conclusion-box::after { content: '"'; position: absolute; right: 20px; bottom: -20px; font-family: 'Fraunces', serif; font-size: 180px; color: rgba(255,255,255,0.04); line-height: 1; }
+  .conclusion-box .box-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 16px; }
+  .conclusion-box p { font-size: 14.5px; line-height: 1.9; color: rgba(245,240,232,0.85); position: relative; z-index: 1; max-width: 700px; }
+  .conclusion-buckets { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  .cb-item { border: 1px solid rgba(245,240,232,0.2); padding: 12px 18px; font-family: 'Fraunces', serif; font-size: 13.5px; font-style: italic; color: var(--accent-soft); position: relative; z-index: 1; }
+
+  .footnote { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.04em; text-align: center; padding: 24px 0 8px; border-top: 1px solid var(--rule); margin-top: 48px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-label">Deep Dive Review · Meeting Minutes</div>
+    <h1 class="header-title">Non-Action Fantasy &amp;<br><em>Hybrid Thriller</em> Theme Bucket</h1>
+    <div class="header-sub">Success Factor Analysis &amp; Sourcing Strategy for Gender-Neutral Titles</div>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Meeting Type</span>
+        <span class="meta-value">Deep Dive Review (DDR)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Author</span>
+        <span class="meta-value">Jaehyun Lee (GW Acquisition &amp; Programming)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Hosted By</span>
+        <span class="meta-value">GW Acquisition &amp; Programming</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- PURPOSE -->
+  <div class="purpose-box">
+    <div class="box-label">Meeting Objective</div>
+    <p>Identify what makes Non-Action Fantasy and Hybrid Thriller titles work for gender-neutral audiences, and build out Theme Buckets and evaluation criteria we can use for sourcing and launch strategy going forward. Core questions: What narrative structures keep readers coming back when there's no action? Which growth/healing fantasy themes actually land with gender-neutral readers? Are there Theme Buckets we can expand further? We'll work through these using the three titles selected for this review.</p>
+  </div>
+
+  <div class="titles-grid">
+    <div class="title-badge">
+      <div class="tb-label">Selected Title 01</div>
+      <div class="tb-name">나 혼자 탑에서 농사 / Solo Farming in the Tower</div>
+    </div>
+    <div class="title-badge">
+      <div class="tb-label">Selected Title 02</div>
+      <div class="tb-name">니나의 마법서랍 / Nina's Magic Drawer</div>
+    </div>
+    <div class="title-badge">
+      <div class="tb-label">Selected Title 03</div>
+      <div class="tb-name">전지적 독자 시점 / Omniscient Reader's Viewpoint</div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 01 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Key Insights — What Does "Gender-Neutral Fantasy" Actually Mean?</span>
+    </div>
+
+    <div class="insight-block">
+
+      <div class="insight-item">
+        <div class="insight-item-head">
+          <span class="item-num">1-1</span>
+          <span class="item-title">"Less action" doesn't make a title gender-neutral</span>
+        </div>
+        <div class="insight-item-body">
+          <p>Trying to define gender-neutral fantasy by how much action it contains doesn't hold up. <em>전지적 독자 시점 / Omniscient Reader's Viewpoint</em> has plenty of action and still draws a majority female readership, while plenty of low-action titles have completely failed to cross over. Successful gender-neutral titles like <em>역대급 영지 설계사 / The Ultimate Estate Designer</em>, <em>나 혼자 탑에서 농사 / Solo Farming in the Tower</em>, and <em>전지적 독자 시점 / Omniscient Reader's Viewpoint</em> do tend to have fewer overt action sequences — but that's a symptom, not the cause.</p>
+          <div class="pull-quote">
+            "If it's a male-targeted title, but a female team member reads it and goes 'this is actually fun' — that's gender-neutral. No need to overthink it."
+            <span class="quote-attr">— Heewon Shin</span>
+          </div>
+          <div class="case-note"><strong>Platform context:</strong> The whole point of gender-neutral sourcing is to bring female readers — who are heavily concentrated in romance fantasy — into male-oriented fantasy. With the romance fantasy market softening and adult content no longer a priority, gender-neutral, thriller, and drama titles are now the main lever for growing our reader base. Data from titles like <em>입학용병 / Mercenary Enrollment</em> and <em>킬러 베드로 / Killer Pedro</em> backs this up: when female readers co-read a male-oriented title, retention is higher and it holds its ranking longer.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-item-head">
+          <span class="item-num">1-2</span>
+          <span class="item-title">Female readers are there for the characters and story — not the fights</span>
+        </div>
+        <div class="insight-item-body">
+          <p>Male readers tend to gravitate toward good-vs-evil setups, rivalry dynamics, and physical or stat-based power progression. Female readers respond more to character relationships, psychological tension, negotiation, and exploring the world of the story. Female readers who grew up on Harry Potter-style fantasy tend to want world-building and character growth over straightforward battle arcs.</p>
+          <p>When romance readers cross into fantasy, <strong>the male lead's look and first impression</strong> are often decisive. "If it opens with the tower, the villain, monsters — I check out. But if there's a fight and the male lead looks cool, I'll keep going." (Jihyun Bae) The key to getting gender-neutral fantasy right is leading with character appeal, then letting the story unfold from there.</p>
+          <div class="case-note"><strong><em>전지적 독자 시점 / Omniscient Reader's Viewpoint</em>:</strong> A large female fan base already existed from the original web novel. The conflict runs on negotiation, information asymmetry, and psychological tension rather than physical combat. Female reader share sits around 25% — low in absolute terms, but well above the genre average. This is the structural pattern for gender-neutral titles: a solid male reader base with additional female reader crossover on top. The trend holds globally — in Indonesia's "Best Male Lead" vote, protagonist KDJ beat out romance leads to take first place.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-item-head">
+          <span class="item-num">1-3</span>
+          <span class="item-title">Female protagonist ≠ gender-neutral / Academy titles skew male by default</span>
+        </div>
+        <div class="insight-item-body">
+          <p>Female-protagonist action titles have consistently underperformed because male readers tend to disengage. Titles launched as gender-neutral off the back of <em>놀이감 / The Play</em>'s success largely missed the mark. Female readers respond to character appeal and story regardless of protagonist gender; male readers, on the other hand, often drop off when the protagonist is female. Female-protagonist action titles are hard to pitch as either male-oriented or gender-neutral — female-oriented is usually the right call.</p>
+          <p>The group also aligned on academy titles: they tend to be baked with harem elements and shaped by Japanese genre conventions aimed at male readers, which makes gender-neutral classification a stretch. The only exception would be a premise that's genuinely unusual.</p>
+          <div class="case-note"><strong>Don't put all your eggs in one basket:</strong> A gender-neutral strategy shouldn't hinge on a single factor (BL undertones, female protagonist, healing vibes, etc.). It needs to be a portfolio of signals spread across the title. This principle applies to how we source gender-neutral titles just as much as anything else.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- SECTION 02 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">The Character Duo — The Core Hook for Female Readers</span>
+    </div>
+
+    <div class="duo-section">
+      <div class="duo-head">
+        <div class="duo-head-label">Why it works</div>
+        <div class="duo-head-title">Strong dynamics between male characters are often a key driver of female readership and long-term engagement</div>
+      </div>
+      <div class="duo-body">
+        <p>The single most powerful hook for bringing in and retaining female readers in gender-neutral fantasy is the <strong>Character Duo between two male characters</strong>. Female readers tend to pick up on the dynamic between two characters, interpreting it through a BL lens — writing fan fiction, creating content, pushing it viral — which organically grows the fandom. It doesn't have to be explicit BL. The structure just needs to be <em>shippable</em>: it gives readers enough space to read into the relationship and project onto it. Once a dedicated female fan base forms around that dynamic, the title's spending power goes up significantly.</p>
+
+        <div class="duo-examples">
+          <div class="duo-example">
+            <div class="ex-title">전지적 독자 시점 / Omniscient Reader's Viewpoint</div>
+            <div class="ex-pair">KDJ × Yoo Joonghyuk</div>
+            <div class="ex-desc">Fan fiction interpreted through a BL lens blew up both domestically and internationally. Won the "Best Male Lead" vote on Webtoon Indonesia over romance leads. The clearest global example of a gender-neutral title that worked.</div>
+          </div>
+          <div class="duo-example">
+            <div class="ex-title">내가 키운 S급들 / The S-Classes That I Raised</div>
+            <div class="ex-pair">Protagonist × Male Characters</div>
+            <div class="ex-desc">Cute character energy plus male character dynamics that fans often read through a BL lens drive female readership. The summoned creature characters are a big part of the appeal. A case where gender-neutral structure and feminine sensibility coexist.</div>
+          </div>
+          <div class="duo-example">
+            <div class="ex-title">백작가의 망나니가 되었다 / I Became a Crazy Swordsmanship Instructor in the Game</div>
+            <div class="ex-pair">Male Character Duo Structure</div>
+            <div class="ex-desc">Gender-neutral readership confirmed via a compelling character duo and a shippable structure. The art style keeps the barrier to entry low.</div>
+          </div>
+        </div>
+
+        <div class="duo-mechanics">
+          <div class="mech-label">Character Duo — Sourcing Checklist</div>
+          <ul>
+            <li>Is there a secondary male character who stands on equal footing with the protagonist? (supporter, rival, companion)</li>
+            <li>Do the two characters go through a conflict → trust → bond arc over the course of the story?</li>
+            <li>Are there recurring scenes where readers can read into the pair's relationship?</li>
+            <li>Is the character pairing shippable — does it have the kind of viral potential that drives fan fiction and fan-made content?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 03 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">Gender-Neutral Sourcing Criteria — Green Lights &amp; Deal Breakers</span>
+    </div>
+
+    <div class="fail-grid">
+      <div class="fail-col positive">
+        <div class="fail-col-title">Green Lights — Must Haves</div>
+        <ul class="fail-list positive">
+          <li><strong>Character Appeal:</strong> The protagonist needs to be visually and narratively compelling. This is the front door for romance readers crossing over.</li>
+          <li><strong>Character Duo:</strong> A shippable dynamic between two male characters (see Section 02)</li>
+          <li><strong>Strong Supporting Cast:</strong> The characters around the protagonist should each have their own distinct appeal</li>
+          <li><strong>Story-driven Progression:</strong> Power that comes from narrative force — not physical stats</li>
+          <li><strong>Fast Entry:</strong> Core premise established within the first 3 episodes, with a simple and repeatable reward loop</li>
+          <li><strong>The Gut Check:</strong> A female team member reads it and says "I'd actually read this, even though it's targeted at guys"</li>
+        </ul>
+      </div>
+      <div class="fail-col negative">
+        <div class="fail-col-title">Deal Breakers — Must Not Haves</div>
+        <ul class="fail-list negative">
+          <li><strong>Harem Structure:</strong> This includes cases where it only shows up in later chapters. Any single deal breaker disqualifies a title from gender-neutral sourcing.</li>
+          <li><strong>Overly Sexualized Female Characters:</strong> In both the art and the story. Includes Japanese-style fan service.</li>
+          <li><strong>Female-Protagonist Action Title:</strong> Can't be assumed gender-neutral by default. High risk of male reader drop-off.</li>
+          <li><strong>Heavy Early World-Building:</strong> Leading with towers, villains, beasts, and monsters before readers have anyone to care about.</li>
+          <li><strong>Academy Genre (default):</strong> Typically male-oriented through harem elements and Japanese genre conventions. Only consider an exception when the premise is genuinely unusual.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="fail-case">
+      <div class="case-title">Failure Case — 회칼 하나로 아카데미를 평정했다 / Crushing the Academy with One Sashimi Knife</div>
+      The early hook — a single sashimi knife as a unique item — was strong, and female readers came in initially. But harem elements and over-sexualized female character depictions (Japanese-style) showed up later, and female readers dropped off. The title did exceptionally well in Japan, which tells you it's precisely tuned to Japanese male-oriented genre conventions. This one was better off launched as male-oriented from the start.
+    </div>
+
+    <div class="success-case">
+      <div class="case-title">What Good Looks Like — Gender-Neutral Titles with High Retention</div>
+      <em>킬러 베드로 / Killer Pedro</em>, <em>입학용병 / Mercenary Enrollment</em> — both confirmed that male-oriented titles with meaningful female co-readership hold their rankings longer and retain better overall. Data for <em>입학용병 / Mercenary Enrollment</em> shows a high share of romance fantasy among co-read titles, which is solid evidence that female readers are there in real numbers. This is the structural argument for why gender-neutral fantasy outperforms pure male-oriented titles on long-term retention.
+    </div>
+  </div>
+
+
+  <!-- SECTION 04: THEME BUCKETS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Theme Bucket Definitions</span>
+    </div>
+
+    <!-- BUCKET 01 -->
+    <div class="bucket-block">
+      <div class="bucket-head">
+        <span class="bucket-num">BUCKET 01</span>
+        <span class="bucket-name">Growth / Healing Tycoon Fantasy</span>
+      </div>
+      <div class="bucket-definition">
+        <strong>Definition:</strong> Fantasy where the protagonist builds and expands their own domain — a farm, an estate, a dungeon, etc. It reads like a healing or slice-of-life title on the surface, but the actual reader pleasure is <strong>tycoon mechanics</strong>: accumulating power, collecting allies, and stacking up recurring rewards. What separates this from a simple healing title is the feeling of steady, compounding growth. Given that female players make up the overwhelming majority of tycoon game audiences, we'd expect a similar pattern to emerge in webtoons.
+      </div>
+      <div class="bucket-grid">
+        <div class="bucket-grid-col">
+          <div class="bucket-col-title">Why it works for gender-neutral</div>
+          <ul>
+            <li>Little to no action keeps the barrier to entry low</li>
+            <li>Female players dominate tycoon games<span class="li-note">→ That same audience behavior is likely to carry over to webtoons</span></li>
+            <li>Chemistry between the protagonist and animal/ally companions works as a variant of the Character Duo</li>
+            <li>Simple, repeatable reward loops encourage sustained reading without drop-off</li>
+            <li>"Domain expansion" gives readers a clear sense of direction and something to root for</li>
+          </ul>
+        </div>
+        <div class="bucket-grid-col">
+          <div class="bucket-col-title">Sourcing Checklist</div>
+          <ul>
+            <li>Does Episode 1 surface the core premise (farming / estate / management) right away?</li>
+            <li>Is there a clear direction for expanding power or collecting allies?</li>
+            <li>Is the chemistry between the protagonist and their supporting cast (animals / allies) strong enough?</li>
+            <li>Can the story move at a good clip without getting bogged down in early world-building?</li>
+            <li>Does a "dark force" show up in the back half without any narrative buildup?<span class="li-note">→ Maintaining the healing tone is everything. See 김오진 case below.</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="bucket-cases">
+        <div class="bucket-cases-title">Case Studies &amp; What Made Them Work</div>
+        <div class="case-cards">
+          <div class="case-card">
+            <div class="cc-title">나 혼자 탑에서 농사 / Solo Farming in the Tower</div>
+            <div class="cc-tag">SUCCESS — TW Top 30 Sustained</div>
+            <div class="cc-why">Tower + farming premise is right there in Episode 1. Strong chemistry with the rabbit companions and a likable quest manager NPC. Fast pacing and a clean reward loop. Tycoon mechanics dressed up as healing — the real hook is the domain expansion. Later chapters keep adding new world and relationship threads to stay fresh.</div>
+          </div>
+          <div class="case-card">
+            <div class="cc-title">역대급 영지 설계사 / The Ultimate Estate Designer</div>
+            <div class="cc-tag">REFERENCE</div>
+            <div class="cc-why">The process of optimizing and growing the estate is the tycoon satisfaction. The Ppodungi × Lloyd relationship is a clear draw for female readers. A case that successfully combines the Character Duo with tycoon structure.</div>
+          </div>
+          <div class="case-card">
+            <div class="cc-title">김오진과 이상한 동물들 / Kim Ojin and the Strange Animals</div>
+            <div class="cc-tag">Comparison Case — Underperformed</div>
+            <div class="cc-why">Underperformed vs. 나 혼자 탑에서 농사 / Solo Farming in the Tower. Why: ① Omnibus-per-animal structure breaks the immersion flow ② A dark force in the second half comes out of nowhere ③ Weak character relationships ④ Slightly juvenile tone. A case study in what happens when you can't hold the healing baseline.</div>
+          </div>
+          <div class="case-card">
+            <div class="cc-title">풍작이에요, 마왕님 / Bountiful Harvest, Demon King &amp; Others</div>
+            <div class="cc-tag">PIPELINE</div>
+            <div class="cc-why">Includes titles like <em>마왕인데 용사가 너무 많음 / Too Many Heroes for the Villain</em> and <em>악당들의 후원자가 되었다 / I Became the Patron of the Villains</em>. A tycoon variant where the mechanic is collecting villains or enemy characters as allies. A direction worth pursuing in sourcing.</div>
+          </div>
+        </div>
+      </div>
+      <div class="bucket-sourcing">
+        <div class="src-label">Where to Look Next — Premise Variations</div>
+        <ul>
+          <li>Farm / Village Management</li>
+          <li>Estate Expansion / Lord Title</li>
+          <li>Dungeon Management</li>
+          <li>Defense / Tower Building</li>
+          <li>Monster Raising</li>
+          <li>Ally / Villain Collection</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BUCKET 02 -->
+    <div class="bucket-block">
+      <div class="bucket-head">
+        <span class="bucket-num">BUCKET 02</span>
+        <span class="bucket-name">Relationship-driven Fantasy</span>
+      </div>
+      <div class="bucket-definition">
+        <strong>Definition:</strong> Fantasy where narrative and character relationships are the engine of the story. Action is fine, but readers keep coming back not for "the next fight" but because they need to know <strong>what happens to these characters.</strong> The Character Duo hits especially hard here, and these titles tend to build strong fandoms with high viral potential.
+      </div>
+      <div class="bucket-grid">
+        <div class="bucket-grid-col">
+          <div class="bucket-col-title">Why it works for gender-neutral</div>
+          <ul>
+            <li>Fits the "world-building + character growth" grammar female readers know from Harry Potter and fantasy novels</li>
+            <li>Character Duo → fan-interpreted BL dynamics → fan fiction / viral → new female reader crossover (a genuine flywheel)</li>
+            <li>Negotiation, information warfare, psychological tension in place of combat → easier to get into for readers who aren't fantasy genre regulars</li>
+            <li>High character shippability opens up real potential for merch and event tie-ins</li>
+          </ul>
+        </div>
+        <div class="bucket-grid-col">
+          <div class="bucket-col-title">Sourcing Checklist</div>
+          <ul>
+            <li>Is there a shippable secondary male character alongside the protagonist? (see Section 02)</li>
+            <li>Does the protagonist's power come from "physical stats" or "story"?<span class="li-note">→ The latter makes it much easier for female readers to get in</span></li>
+            <li>Do the characters actually go through a full trust-conflict-bond arc?</li>
+            <li>Does a web novel source or existing fan base already exist?<span class="li-note">→ Head start on female reader crossover. First-mover advantage is real here.</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="bucket-cases">
+        <div class="bucket-cases-title">Case Studies &amp; What Made Them Work</div>
+        <div class="case-cards">
+          <div class="case-card">
+            <div class="cc-title">전지적 독자 시점 / Omniscient Reader's Viewpoint</div>
+            <div class="cc-tag">SUCCESS — Global Gender-Neutral Flagship</div>
+            <div class="cc-why">A large female fan base already existed from the original web novel. KDJ × YJH fan content — widely read through a BL lens — went viral domestically and internationally. Conflict runs on negotiation, information warfare, and psychological tension. Power rooted in the story rather than physical strength — keeps the barrier low for female readers.</div>
+          </div>
+          <div class="case-card">
+            <div class="cc-title">내가 키운 S급들 / The S-Classes That I Raised</div>
+            <div class="cc-tag">REFERENCE</div>
+            <div class="cc-why">Cute character energy and male character dynamics that fans consistently read through a BL lens. Gender-neutral structure and feminine sensibility working side by side. The summoned creature characters are core to its appeal.</div>
+          </div>
+          <div class="case-card">
+            <div class="cc-title">입학용병 / Mercenary Enrollment</div>
+            <div class="cc-tag">REFERENCE</div>
+            <div class="cc-why">High share of romance fantasy in co-read titles → confirms female readers are there in real numbers. A real-world example of gender-neutral fantasy holding its ranking through long-term retention.</div>
+          </div>
+        </div>
+      </div>
+      <div class="bucket-sourcing">
+        <div class="src-label">Where to Look Next — Relationship Structure Types</div>
+        <ul>
+          <li>Overpowered MC + Story-driven Growth</li>
+          <li>Bromance-based Companion Structure</li>
+          <li>Rival → Ally Conversion Arc</li>
+          <li>Popular Web Novel Adaptations</li>
+          <li>Titles with Shippable Character Duos</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BUCKET 03 -->
+    <div class="bucket-block">
+      <div class="bucket-head">
+        <span class="bucket-num">BUCKET 03</span>
+        <span class="bucket-name">Hybrid Suspense / Thriller</span>
+        <span style="font-family:'DM Mono',monospace; font-size:10px; color:rgba(245,240,232,0.45); margin-left:8px; font-style:normal;">Name still under discussion — see notes below</span>
+      </div>
+      <div class="bucket-definition">
+        <strong>Definition:</strong> Thrillers where suspense and drama take the lead over outright horror. Titles in this bucket hold tension without leaning on classic thriller tropes (ghosts, killers, jump-scare sequences). On this platform, pairing with romance or drama elements significantly raises the ceiling for mainstream success. To bring the barrier to entry down, <strong>pitching the genre as "drama" rather than "thriller"</strong> is often the smarter move.
+      </div>
+
+      <!-- THRILLER INSIGHTS GRID -->
+      <div class="thriller-insight-grid">
+
+        <div class="thriller-insight-item">
+          <div class="ti-label">Romance / Drama Elements</div>
+          <div class="ti-title">Even thrillers need romance or drama to go mainstream</div>
+          <div class="ti-body">
+            <p>Heewon Shin and Jueun Kim both agreed that, given how our platform works, thriller titles need at least a layer of romance or drama to maximize their mainstream potential. Even a thin romantic thread meaningfully increases female reader engagement. In France, thrillers without any romance consistently underperform — a female protagonist helps even further. Within the thriller space, stacking revenge, drama, melodrama, and a touch of absurdism gives titles a shot at reaching both genre fans and general readers at the same time.</p>
+          </div>
+        </div>
+
+        <div class="thriller-insight-item">
+          <div class="ti-label">Character Relationships &amp; Reader Immersion</div>
+          <div class="ti-title">Relationships between characters are what actually drive thriller engagement</div>
+          <div class="ti-body">
+            <p>Jaehyun Lee and Jueun Kim both pointed to character relationships — especially ones built around a female protagonist — as the primary driver of reader immersion in thriller titles. The relationship dynamics in <em>니나의 마법서랍 / Nina's Magic Drawer</em> were called out specifically as a key success factor. It's not the creatures or monsters themselves that keep readers hooked — it's the relationships characters build while facing those threats together.</p>
+          </div>
+        </div>
+
+        <div class="thriller-insight-item">
+          <div class="ti-label">What Makes Thrillers Last — Character Identity</div>
+          <div class="ti-title">Strong character identity is what keeps a thriller alive — monsters and protagonists alike</div>
+          <div class="ti-body">
+            <p>Jihyun Bae noted that a monster or character's distinct personality is essential for sustaining tension in a thriller. Jueun Kim added that even without creature elements, a protagonist who's genuinely off-kilter — authentically unhinged, unpredictable — can generate just as much tension. "Fake-crazy" doesn't cut it — performed quirkiness without real psychological depth falls flat. Subtle, authentic instability is what works. <em>스위트홈 / Sweet Home</em>, <em>타인은 지옥이다 / Hell Is Other People</em>, and <em>4교시 추리게임 / 4th Period Mystery Game</em> are all strong examples of creature character identity done right.</p>
+          </div>
+        </div>
+
+        <div class="thriller-insight-item">
+          <div class="ti-label">Genre Sustainability</div>
+          <div class="ti-title">Thrillers are the hardest genre to hold together in the back half</div>
+          <div class="ti-body">
+            <p>Jueun Kim noted that thriller narratives frequently fall apart in later chapters — tension unravels, plausibility breaks down. The group broadly agreed that keeping thriller tension and dramatic pacing working together is the toughest challenge in the genre. That means sourcing evaluation can't just look at early-episode hooks; it has to assess whether the narrative structure can hold through the back half and whether tone is preserved through coherent plotting. School-setting thrillers in particular are prone to pacing problems from repetitive quest structures.</p>
+          </div>
+        </div>
+
+        <div class="thriller-insight-item">
+          <div class="ti-label">Pitching &amp; Positioning — Genre Labeling</div>
+          <div class="ti-title">The word "thriller" is itself a barrier — we need to rethink the label</div>
+          <div class="ti-body">
+            <p>Jihyun Bae noted that <em>니나의 마법서랍 / Nina's Magic Drawer</em> was able to reach beyond the existing thriller audience largely because of its cute art style and low initial barrier. Jueun Kim pointed out that "thriller" as a word carries dark, scary connotations that actively put new readers off. Kangeun Shin flagged the opportunity to pull in non-traditional reader segments, arguing that we need a broader framing — suspense rather than thriller, outright — paired with a fresh marketing angle.</p>
+            <p>This raised the question of what to call this bucket going forward. Names that came up in discussion:</p>
+            <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:6px;">
+              <span style="background:var(--highlight); border:1px solid var(--rule); font-family:'DM Mono',monospace; font-size:10.5px; padding:4px 10px; color:var(--ink);">Suspense Drama</span>
+              <span style="background:var(--highlight); border:1px solid var(--rule); font-family:'DM Mono',monospace; font-size:10.5px; padding:4px 10px; color:var(--ink);">Dark Drama</span>
+              <span style="background:var(--highlight); border:1px solid var(--rule); font-family:'DM Mono',monospace; font-size:10.5px; padding:4px 10px; color:var(--ink);">Noir Drama</span>
+              <span style="background:var(--highlight); border:1px solid var(--rule); font-family:'DM Mono',monospace; font-size:10.5px; padding:4px 10px; color:var(--ink);">Atmospheric Thriller</span>
+              <span style="background:var(--highlight); border:1px solid var(--rule); font-family:'DM Mono',monospace; font-size:10.5px; padding:4px 10px; color:var(--ink);">Drama Suspense</span>
+              <span style="background:var(--highlight); border:1px solid var(--rule); font-family:'DM Mono',monospace; font-size:10.5px; padding:4px 10px; color:var(--ink);">Soft Thriller</span>
+            </div>
+            <p style="margin-top:10px; font-size:12px; color:var(--muted);">→ Next step: Consider flexible genre tagging — thriller → drama. Lead with drama framing, let the thriller element reveal itself as the series develops. Bring a specific positioning pitch to BU.</p>
+          </div>
+        </div>
+
+        <div class="thriller-insight-item">
+          <div class="ti-label">Variety vs. Metrics-driven Sourcing</div>
+          <div class="ti-title">Keeping genre depth for the core fanbase matters too</div>
+          <div class="ti-body">
+            <p>Jihyun Bae pushed back on the idea of only chasing metrics — thriller fans are a real, committed audience and they need to be served with diverse titles. Thrillers keep getting deprioritized, but the spending power of hardcore thriller readers is measurable and real. Jueun Kim proposed a dual-purpose sourcing structure: find the common ground that speaks to existing readers, while leaving room for intentional curation beyond what the data alone would suggest.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SUSPENSE VS THRILLER -->
+      <div class="suspense-vs-thriller">
+        <div class="svt-head">
+          <div class="svt-head-label">Genre Distinction</div>
+          <div class="svt-head-title">Suspense and thriller aren't the same — and their success factors aren't either</div>
+        </div>
+        <div class="svt-grid">
+          <div class="svt-col">
+            <div class="svt-col-label">Suspense</div>
+            <div class="svt-col-def">Tension from the audience knowing something the protagonist doesn't — dread through dramatic irony</div>
+            <ul>
+              <li>Information asymmetry is the core device</li>
+              <li>Requires a carefully constructed setup to land</li>
+              <li>Readers watch danger approaching while the protagonist remains unaware</li>
+              <li>니나의 마법서랍 / Nina's Magic Drawer, 모닥불 친구들 / Bonfire Friends, etc.</li>
+            </ul>
+          </div>
+          <div class="svt-col">
+            <div class="svt-col-label">Thriller</div>
+            <div class="svt-col-def">"You never know what this protagonist is going to do next" — tension through character unpredictability</div>
+            <ul>
+              <li>The protagonist's unpredictable behavior is the core device</li>
+              <li>Authentic instability, not performed quirkiness — the difference matters enormously</li>
+              <li>Readers experience tension by following the protagonist through it</li>
+              <li>소녀재판 / The Girl's Revenge, 쪽팔려 게임 / The Embarrassing Game, 살인스타그램 / Kill Stagram, etc.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- GENRE STRATEGY BOX -->
+      <div class="genre-strategy">
+        <div class="gs-label">Genre Labeling Strategy — How to Position This as Hybrid</div>
+        <p><strong>Core principle:</strong> The word "thriller" primes readers for something dark and scary — and that's a barrier. Especially when we're trying to reach readers beyond the existing thriller base, flexibly pitching the genre as drama or fantasy first is the smarter play.</p>
+        <p><strong>What to do:</strong> Consider re-tagging thriller → drama / Open with a drama frame, let it transition into thriller as the series develops / Build a specific positioning pitch for BU and advocate for it / If a thumbnail is too scary, flag it for a potential swap (Thailand precedent: a thumbnail change directly improved performance)</p>
+      </div>
+
+      <!-- CASES -->
+      <div class="bucket-cases">
+        <div class="bucket-cases-title">Case Studies &amp; What Made Them Work</div>
+        <div class="case-cards">
+          <div class="case-card">
+            <div class="cc-title">니나의 마법서랍 / Nina's Magic Drawer</div>
+            <div class="cc-tag">SUCCESS — 80% Female Readership</div>
+            <div class="cc-why">Cute art style and a bright color palette that goes against every thriller convention. The fantasy mechanics are strong enough to re-classify it as Suspense Fantasy. Brought in readers who weren't already thriller fans. "A thriller that doesn't feel like a thriller" is the core edge. Worth reconsidering as drama for genre tagging.</div>
+          </div>
+          <div class="case-card">
+            <div class="cc-title">4교시 추리게임 / 4th Period Mystery Game</div>
+            <div class="cc-tag">REFERENCE — Strong TW Performance</div>
+            <div class="cc-why">School setting plays well in Taiwan. Art style softens the horror and makes it accessible to readers outside the thriller base. The ghost character's strong personality makes it easy to get immersed in the world. Repetitive quest structure limits its potential as a global formula.</div>
+          </div>
+          <div class="case-card">
+            <div class="cc-title">타인은 지옥이다 / Hell Is Other People</div>
+            <div class="cc-tag">REFERENCE</div>
+            <div class="cc-why">Outperformed expectations. Short narrative beats and strong early immersion make binge-reading feel natural — exactly the type to prioritize in bulk sourcing. Drama and character relationship dynamics carry the thriller.</div>
+          </div>
+          <div class="case-card">
+            <div class="cc-title">소녀재판 / The Girl's Revenge (FR)</div>
+            <div class="cc-tag">REFERENCE — FR Market</div>
+            <div class="cc-why">Landed in France. Female protagonist + revenge element + drama. Built for the FR market profile (thrillers without romance reliably underperform). Same pattern as <em>네가 사는 그 집 / The House You Live In</em> and <em>똑 닮은 딸 / Spitting Image Daughter</em>.</div>
+          </div>
+          <div class="case-card">
+            <div class="cc-title">모닥불 친구들 / Bonfire Friends</div>
+            <div class="cc-tag">REFERENCE</div>
+            <div class="cc-why">Similar structure to 니나의 마법서랍 / Nina's Magic Drawer — belongs in the Suspense Fantasy category. Fantasy elements lower the thriller barrier to entry the same way. A clean example of drama-hybrid integration.</div>
+          </div>
+          <div class="case-card">
+            <div class="cc-title">살인스타그램 / 쪽팔려 게임 / Kill Stagram / The Embarrassing Game</div>
+            <div class="cc-tag">REFERENCE — Drama Integration</div>
+            <div class="cc-why">Thrillers with drama layered throughout: romance, revenge, melodrama, a hint of absurdism. The protagonist's psychological instability — genuinely unhinged, not performed — is what generates the tension.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARKET NOTES -->
+      <div class="market-section-title" style="padding-top:20px;">Thriller Performance by Market</div>
+      <div class="market-grid">
+        <div class="market-item">
+          <div class="mkt-country">TW (Taiwan)</div>
+          <div class="mkt-note">Consistently running thriller launches. Solid numbers from <em>기기괴괴 / Tales of the Unusual</em>, <em>타인은 지옥이다 / Hell Is Other People</em>, <em>4교시 추리게임 / 4th Period Mystery Game</em>, <em>맛집 / Restaurant to Another World</em>, etc. There's a real thriller niche here.</div>
+        </div>
+        <div class="market-item">
+          <div class="mkt-country">FR (France)</div>
+          <div class="mkt-note">Thrillers without romance reliably underperform. Female-led + drama pairing is non-negotiable. <em>소녀재판 / The Girl's Revenge</em> and <em>네가 사는 그 집 / The House You Live In</em> are the established playbook.</div>
+        </div>
+        <div class="market-item">
+          <div class="mkt-country">EN (North America)</div>
+          <div class="mkt-note">Marketing performs well at the UB level. Horror and thriller trends picking up among Gen Z creators. The genre has a real edge for pulling in new users from outside the platform.</div>
+        </div>
+        <div class="market-item">
+          <div class="mkt-country">TH (Thailand)</div>
+          <div class="mkt-note">Precedent for performance improving after a thumbnail swap. Visual accessibility is critical in this market. Thumbnails that are too scary can stop readers from ever clicking in.</div>
+        </div>
+      </div>
+
+      <div class="bucket-sourcing">
+        <div class="src-label">Where to Look Next</div>
+        <ul>
+          <li>Drama + Thriller Hybrid</li>
+          <li>Thriller with a Romance Thread</li>
+          <li>Suspense Fantasy (fantasy mechanics + lower horror intensity)</li>
+          <li>Female-led Revenge / Drama Thriller</li>
+          <li>Titles with a Genuinely Unhinged Protagonist</li>
+          <li>Titles with Strong Early Immersion<span class="li-note">→ High binge-read potential; ideal for bulk sourcing. Shorter, faster-paced is better.</span></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- SECTION 05: TITLE-BY-TITLE REVIEW -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">DDR Review Summary by Title</span>
+    </div>
+
+    <div class="title-review-list">
+
+      <div class="title-review">
+        <div class="title-review-head">
+          <span class="tr-name">나 혼자 탑에서 농사 / Solo Farming in the Tower</span>
+          <span class="tr-bucket">→ Bucket 01: Growth / Healing Tycoon Fantasy</span>
+        </div>
+        <div class="title-review-body">
+          <p>Looks like a healing/slice-of-life title on the surface, but the actual entertainment structure is tycoon. The "tower + farming" premise is right there from Episode 1, and the chemistry between the protagonist and his rabbit companions is strong. An appealing supporting character — the quest manager — shows up early, and the reward loop is clean and simple. The animal-protagonist chemistry (similar to the Ppodungi × Lloyd dynamic in <em>역대급 영지 설계사 / The Ultimate Estate Designer</em>) is a clear driver of female reader immersion. Has held a spot in TW UB Top 30 consistently — well ahead of <em>김오진과 이상한 동물들 / Kim Ojin and the Strange Animals</em> and <em>그리핀 / Griffin</em>.</p>
+          <div class="tr-verdict"><strong>Classification:</strong> Tycoon Fantasy, not healing/slice-of-life. This becomes the benchmark for sourcing similar premises going forward (farming, estate management, dungeon management, etc.). The fact that it keeps adding new world and relationship threads in later chapters is structural evidence for its long-term retention potential.</div>
+        </div>
+      </div>
+
+      <div class="title-review">
+        <div class="title-review-head">
+          <span class="tr-name">전지적 독자 시점 / Omniscient Reader's Viewpoint</span>
+          <span class="tr-bucket">→ Bucket 02: Relationship-driven Fantasy</span>
+        </div>
+        <div class="title-review-body">
+          <p>This title's gender-neutral nature isn't about less action — it's the Character Duo (KDJ × YJH). A large female fan base already existed from the original web novel, and fan fiction — widely interpreted through a BL lens — went viral domestically and internationally at the same time. Despite having real action, the narrative structure — where the protagonist's power comes from the story itself rather than physical strength — keeps the barrier low for female readers. Female reader share is around 25%, which confirms the structural pattern for gender-neutral titles: a solid male reader base with meaningful female reader crossover on top. The group placed it in the Relationship-driven Fantasy bucket.</p>
+          <div class="tr-verdict"><strong>Classification:</strong> The definitive global case for gender-neutral Relationship-driven Fantasy. The benchmark criteria for sourcing similar titles are "strong male character duo + story-driven growth." To be used as a reference when we go after popular web novel adaptations.</div>
+        </div>
+      </div>
+
+      <div class="title-review">
+        <div class="title-review-head">
+          <span class="tr-name">니나의 마법서랍 / Nina's Magic Drawer</span>
+          <span class="tr-bucket">→ Bucket 03: Hybrid Suspense / Thriller</span>
+        </div>
+        <div class="title-review-body">
+          <p>The title that generated the most genre classification debate. The core question was whether it's a fantasy-infused thriller or a gender-neutral fantasy. The group landed on: "a thriller, but one that doesn't feel like a thriller." The cute art style and bright color palette strip away the usual barrier to thriller entry. The 80% female readership comes from the art style, the novelty of the premise, and the cushioning effect of the fantasy mechanics (the magic drawer) — not from the thriller genre itself. Character relationship dynamics are the primary driver of immersion, and its real value is in demonstrating a structure that brought in new readers rather than converting existing thriller fans.</p>
+          <div class="tr-verdict"><strong>Classification:</strong> Hybrid Suspense / Thriller. Can be approached as drama rather than thriller for genre tagging. For similar titles in sourcing, the criteria are: "cute or bright visuals + fantasy mechanics + low horror intensity + strong character relationships."</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- SECTION 06: ACTION ITEMS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-title">Action Items</span>
+    </div>
+    <div class="action-list">
+      <div class="action-item">
+        <span class="action-idx">A-01</span>
+        <span class="action-text">Break the Gender-Neutral Non-Action Fantasy Theme Bucket down further. Build out better selection criteria and a clearer genre classification framework.</span>
+        <span class="action-owner">Entire Group</span>
+      </div>
+      <div class="action-item">
+        <span class="action-idx">A-02</span>
+        <span class="action-text">Define what makes action/fantasy titles strong at acquiring and retaining female readers. Nail down the gender-neutral benchmarks and put together concrete sourcing evaluation criteria.</span>
+        <span class="action-owner">Entire Group</span>
+      </div>
+      <div class="action-item">
+        <span class="action-idx">A-03</span>
+        <span class="action-text">Establish a sourcing policy for titles where harem elements surface in later chapters. Define classification criteria and sourcing guidelines for male-oriented vs. gender-neutral.</span>
+        <span class="action-owner">Entire Group</span>
+      </div>
+      <div class="action-item">
+        <span class="action-idx">A-04</span>
+        <span class="action-text">Find more tycoon genre webtoon cases with gender-neutral potential. Revisit titles that were previously passed on for low performance — check for latent crossover appeal.</span>
+        <span class="action-owner">Entire Group</span>
+      </div>
+      <div class="action-item">
+        <span class="action-idx">A-05</span>
+        <span class="action-text">Define what gender-neutral appeal actually looks like within the thriller genre, and nail down what counts as a success. Specify the scope for fantasy/drama-hybrid thriller titles.</span>
+        <span class="action-owner">Entire Group</span>
+      </div>
+      <div class="action-item">
+        <span class="action-idx">A-06</span>
+        <span class="action-text">Map out how these action items translate into BU alignment. Get them formalized into editorial strategy and promotional guidelines.</span>
+        <span class="action-owner">Entire Group</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- CONCLUSION -->
+  <div class="conclusion-box">
+    <div class="box-label">Conclusion</div>
+    <p>This review confirmed that what makes gender-neutral Non-Action Fantasy work has nothing to do with how much action there is — it comes down to <strong style="color:var(--accent-soft);">Relationships, Progression, Expansion, and Character Appeal.</strong> Of those, the Character Duo is the single most powerful hook for bringing in and keeping female readers, and it needs to be the top item on the sourcing checklist. The Suspense/Thriller bucket can absolutely win a gender-neutral audience when it's positioned as a "thriller that doesn't feel like a thriller" — one that leads with drama, romance, and strong character identity. The final bucket name is still to be determined. Going forward, sourcing will be organized around the three Theme Buckets below rather than genre classification alone.</p>
+    <div class="conclusion-buckets">
+      <div class="cb-item">① Growth / Healing Tycoon Fantasy</div>
+      <div class="cb-item">② Relationship-driven Fantasy</div>
+      <div class="cb-item">③ Suspense / Thriller <em style="font-size:11px; opacity:0.7;">— Name TBD</em></div>
+    </div>
+  </div>
+
+  <div class="footnote">WEBTOON — GW Acquisition &amp; Programming · Deep Dive Review</div>
+
+</div>
+</body>
+</html>
